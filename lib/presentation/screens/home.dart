@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 
 import 'package:expenses_manager/domain/entities/expenses.dart';
-import 'package:expenses_manager/presentation/blocs/create_expenses_bloc.dart';
-import 'package:expenses_manager/presentation/blocs/expenses_list_bloc.dart';
+import 'package:expenses_manager/presentation/blocs/create_expenses/create_expenses_bloc.dart';
+import 'package:expenses_manager/presentation/blocs/expenses_list/expenses_list_bloc.dart';
 import 'package:expenses_manager/presentation/screens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

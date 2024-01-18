@@ -8,3 +8,14 @@ sealed class ExpensesListEvent extends Equatable {
 }
 
 final class ExpensesListFetched extends ExpensesListEvent {}
+
+final class ExpensesItemDeleted extends ExpensesListEvent {
+  final String id;
+
+  const ExpensesItemDeleted({
+    required this.id,
+  });
+
+  @override
+  List<Object> get props => [id];
+}

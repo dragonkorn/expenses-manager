@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:expenses_manager/data/models/expenses_model.dart';
-import 'package:expenses_manager/data/storage/add_expenses.dart';
-import 'package:uuid/uuid.dart';
+import 'package:expenses_manager/core/di/locator.dart';
+import 'package:expenses_manager/domain/usecases/add_expenses_usecase.dart';
 
 part 'create_expenses_event.dart';
 part 'create_expenses_state.dart';
 
 class CreateExpensesBloc
     extends Bloc<CreateExpensesEvent, CreateExpensesState> {
-  final _expensesStorageManager = ExpensesStorageManager();
+  final AddExpensesUsecase _addExpensesUsecase = locator();
 
   CreateExpensesBloc() : super(CreateExpensesInitial()) {
     on<CreateExpensesStarted>(_onCreateExpensesStarted);
@@ -20,6 +19,7 @@ class CreateExpensesBloc
     CreateExpensesStarted event,
     Emitter<CreateExpensesState> emit,
   ) {
+    emit(CreateExpensesInitial());
     emit(CreateExpensesInprogress());
   }
 
@@ -27,17 +27,16 @@ class CreateExpensesBloc
     CreateExpensesSubmitted event,
     Emitter<CreateExpensesState> emit,
   ) async {
-    Uuid uuid = const Uuid();
-    ExpensesModel expenses = ExpensesModel(
-      id: uuid.v4(),
-      amount: event.amount,
-      date: DateTime.now(),
-      expensesMethod: event.expensesMethod,
-      description: event.description,
-    );
     try {
-      final _ = await _expensesStorageManager.addExpenses(expenses);
-      emit(CreateExpensesSuccess());
+      final isSuccess = await _addExpensesUsecase.call(AddExpensesUsecaseParams(
+        description: event.description,
+        amount: event.amount,
+        expensesMethod: event.expensesMethod,
+      ));
+      if (isSuccess) {
+        return emit(CreateExpensesSuccess());
+      }
+      return emit(CreateExpensesFailure());
     } catch (err) {
       emit(CreateExpensesFailure());
     }

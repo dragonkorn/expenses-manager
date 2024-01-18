@@ -1,10 +1,16 @@
+import 'package:expenses_manager/core/di/locator.dart';
+import 'package:expenses_manager/data/db/sqlite.dart';
 import 'package:expenses_manager/presentation/blocs/create_expenses_bloc.dart';
 import 'package:expenses_manager/presentation/blocs/expenses_list_bloc.dart';
 import 'package:expenses_manager/presentation/screens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  // TestWidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  // DatabaseHelper _ = locator();
+  // await helper.initial();
   runApp(const MyApp());
 }
 

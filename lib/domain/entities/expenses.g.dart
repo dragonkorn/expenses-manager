@@ -13,6 +13,7 @@ _$ExpensesImpl _$$ExpensesImplFromJson(Map<String, dynamic> json) =>
       date: DateTime.parse(json['date'] as String),
       expensesMethod: json['expensesMethod'] as String,
       description: json['description'] as String,
+      isExpenses: json['isExpenses'] as int?,
     );
 
 Map<String, dynamic> _$$ExpensesImplToJson(_$ExpensesImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$ExpensesImplToJson(_$ExpensesImpl instance) =>
       'date': instance.date.toIso8601String(),
       'expensesMethod': instance.expensesMethod,
       'description': instance.description,
+      'isExpenses': instance.isExpenses,
     };

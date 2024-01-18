@@ -13,11 +13,13 @@ final class CreateExpensesSubmitted extends CreateExpensesEvent {
   final double amount;
   final String expensesMethod;
   final String description;
+  final int isExpenses;
 
   const CreateExpensesSubmitted({
     required this.amount,
     required this.expensesMethod,
     required this.description,
+    required this.isExpenses,
   });
 
   @override
@@ -25,5 +27,6 @@ final class CreateExpensesSubmitted extends CreateExpensesEvent {
         amount,
         expensesMethod,
         description,
+        isExpenses,
       ];
 }

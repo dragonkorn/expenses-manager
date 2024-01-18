@@ -11,6 +11,7 @@ class Expenses with _$Expenses {
     required DateTime date,
     required String expensesMethod,
     required String description,
+    int? isExpenses,
   }) = _Expenses;
 
   factory Expenses.fromJson(Map<String, dynamic> json) =>

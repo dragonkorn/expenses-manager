@@ -32,6 +32,7 @@ class CreateExpensesBloc
         description: event.description,
         amount: event.amount,
         expensesMethod: event.expensesMethod,
+        isExpenses: event.isExpenses,
       ));
       if (isSuccess) {
         return emit(CreateExpensesSuccess());

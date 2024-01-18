@@ -47,6 +47,11 @@ class ExpensesStorageManager {
       expensesModelList.add(newExpenses);
       for (var expensesModel in expensesModelList) {
         final json = expensesModel.toJson();
+        json['isExpenses'] = switch (json['isExpenses']) {
+          true => 1,
+          false => 0,
+          _ => null,
+        };
         expensesJsonList.add(json);
       }
       final encoded = jsonEncode(expensesJsonList);

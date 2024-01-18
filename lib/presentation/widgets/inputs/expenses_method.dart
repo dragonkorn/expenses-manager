@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ExpensesMethod extends StatefulWidget {
-  const ExpensesMethod({Key? key, required this.onChanged}) : super(key: key);
+  const ExpensesMethod({Key? key, required this.onChanged, this.isExpenses})
+      : super(key: key);
 
   final void Function(String value) onChanged;
+  final bool? isExpenses;
 
   @override
   State<ExpensesMethod> createState() => _ExpensesMethodState();

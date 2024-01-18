@@ -25,6 +25,7 @@ mixin _$ExpensesModel {
   DateTime get date => throw _privateConstructorUsedError;
   String get expensesMethod => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  int? get isExpenses => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $ExpensesModelCopyWith<$Res> {
       double amount,
       DateTime date,
       String expensesMethod,
-      String description});
+      String description,
+      int? isExpenses});
 }
 
 /// @nodoc
@@ -64,6 +66,7 @@ class _$ExpensesModelCopyWithImpl<$Res, $Val extends ExpensesModel>
     Object? date = null,
     Object? expensesMethod = null,
     Object? description = null,
+    Object? isExpenses = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -86,6 +89,10 @@ class _$ExpensesModelCopyWithImpl<$Res, $Val extends ExpensesModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      isExpenses: freezed == isExpenses
+          ? _value.isExpenses
+          : isExpenses // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -103,7 +110,8 @@ abstract class _$$ExpensesModelImplCopyWith<$Res>
       double amount,
       DateTime date,
       String expensesMethod,
-      String description});
+      String description,
+      int? isExpenses});
 }
 
 /// @nodoc
@@ -122,6 +130,7 @@ class __$$ExpensesModelImplCopyWithImpl<$Res>
     Object? date = null,
     Object? expensesMethod = null,
     Object? description = null,
+    Object? isExpenses = freezed,
   }) {
     return _then(_$ExpensesModelImpl(
       id: null == id
@@ -144,6 +153,10 @@ class __$$ExpensesModelImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      isExpenses: freezed == isExpenses
+          ? _value.isExpenses
+          : isExpenses // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -156,7 +169,8 @@ class _$ExpensesModelImpl implements _ExpensesModel {
       required this.amount,
       required this.date,
       required this.expensesMethod,
-      required this.description});
+      required this.description,
+      this.isExpenses});
 
   factory _$ExpensesModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExpensesModelImplFromJson(json);
@@ -171,10 +185,12 @@ class _$ExpensesModelImpl implements _ExpensesModel {
   final String expensesMethod;
   @override
   final String description;
+  @override
+  final int? isExpenses;
 
   @override
   String toString() {
-    return 'ExpensesModel(id: $id, amount: $amount, date: $date, expensesMethod: $expensesMethod, description: $description)';
+    return 'ExpensesModel(id: $id, amount: $amount, date: $date, expensesMethod: $expensesMethod, description: $description, isExpenses: $isExpenses)';
   }
 
   @override
@@ -188,13 +204,15 @@ class _$ExpensesModelImpl implements _ExpensesModel {
             (identical(other.expensesMethod, expensesMethod) ||
                 other.expensesMethod == expensesMethod) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.isExpenses, isExpenses) ||
+                other.isExpenses == isExpenses));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, amount, date, expensesMethod, description);
+  int get hashCode => Object.hash(
+      runtimeType, id, amount, date, expensesMethod, description, isExpenses);
 
   @JsonKey(ignore: true)
   @override
@@ -216,7 +234,8 @@ abstract class _ExpensesModel implements ExpensesModel {
       required final double amount,
       required final DateTime date,
       required final String expensesMethod,
-      required final String description}) = _$ExpensesModelImpl;
+      required final String description,
+      final int? isExpenses}) = _$ExpensesModelImpl;
 
   factory _ExpensesModel.fromJson(Map<String, dynamic> json) =
       _$ExpensesModelImpl.fromJson;
@@ -231,6 +250,8 @@ abstract class _ExpensesModel implements ExpensesModel {
   String get expensesMethod;
   @override
   String get description;
+  @override
+  int? get isExpenses;
   @override
   @JsonKey(ignore: true)
   _$$ExpensesModelImplCopyWith<_$ExpensesModelImpl> get copyWith =>

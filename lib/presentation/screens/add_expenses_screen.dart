@@ -15,6 +15,7 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
   String _expensesValue = '';
   String _expensesMethod = '1';
   String _description = '';
+  bool _isExpenses = true;
 
   void _onSubmit() {
     context.read<CreateExpensesBloc>().add(
@@ -22,6 +23,7 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
             amount: double.parse(_expensesValue),
             expensesMethod: _expensesMethod,
             description: _description,
+            isExpenses: _isExpenses ? 1 : 0,
           ),
         );
   }
@@ -56,15 +58,9 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
               },
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                          '$_expensesValue > $_expensesMethod > $_description'),
-                    ],
-                  ),
                   TextField(
                     decoration: const InputDecoration(
-                      labelText: 'Number of Expenses',
+                      labelText: 'Amount',
                     ),
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
@@ -76,7 +72,23 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
                       });
                     },
                   ),
+                  // Switch input between expenses or income
+                  Row(
+                    children: [
+                      Switch(
+                        value: _isExpenses,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _isExpenses = newValue;
+                            _expensesMethod = '0';
+                          });
+                        },
+                      ),
+                      const Text('Is Expenses? (uncheck if income)'),
+                    ],
+                  ),
                   ExpensesMethod(
+                    isExpenses: _isExpenses,
                     onChanged: (value) {
                       setState(() {
                         _expensesMethod = value;
@@ -85,7 +97,7 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
                   ),
                   TextField(
                     decoration: const InputDecoration(
-                      labelText: 'Expenses',
+                      labelText: 'Description',
                     ),
                     onChanged: (value) {
                       setState(() {

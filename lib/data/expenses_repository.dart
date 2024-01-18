@@ -22,9 +22,10 @@ class ExpensesRepository {
 
   Future<void> insert(ExpensesModel expenses) async {
     final db = await dbCore.getDatabase();
+    var json = expenses.toJson();
     await db.insert(
       'expenses',
-      expenses.toJson(),
+      json,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }

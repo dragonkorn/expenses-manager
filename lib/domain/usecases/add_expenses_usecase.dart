@@ -21,6 +21,7 @@ class AddExpensesUsecase extends UseCase<AddExpensesUsecaseParams, bool> {
       amount: params.amount,
       date: DateTime.now(),
       expensesMethod: params.expensesMethod,
+      isExpenses: params.isExpenses,
     );
 
     try {
@@ -36,10 +37,12 @@ class AddExpensesUsecaseParams {
   final String description;
   final double amount;
   final String expensesMethod;
+  final int isExpenses;
 
   AddExpensesUsecaseParams({
     required this.description,
     required this.amount,
     required this.expensesMethod,
+    required this.isExpenses,
   });
 }

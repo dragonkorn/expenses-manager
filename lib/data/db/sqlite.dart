@@ -24,8 +24,9 @@ class DatabaseHelper {
       // When the database is first created, create a table to store dogs.
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the database.
+        // return db.execute('DROP TABLE IF EXISTS expenses');
         return db.execute(
-          'CREATE TABLE expenses ( id TEXT PRIMARY KEY, amount REAL, date DATE, expensesMethod TEXT, description TEXT)',
+          'CREATE TABLE expenses ( id TEXT PRIMARY KEY, amount REAL, date DATE, expensesMethod TEXT, description TEXT, isExpenses INTEGER)',
         );
       },
       // Set the version. This executes the onCreate function and provides a
@@ -34,3 +35,8 @@ class DatabaseHelper {
     );
   }
 }
+
+/// To find db
+/// `ps aux | grep 'CoreSimulator/Devices'`
+/// `cd /Users/kornisaranimitr/Library/Developer/CoreSimulator/Devices/C15B237E-ADCF-48F6-B84E-FD5A81682D2C/`
+/// `find ./ -type f -name 'expenses_database.db'`

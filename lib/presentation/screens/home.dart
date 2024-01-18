@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:expenses_manager/presentation/blocs/export_expenses/export_expenses_bloc.dart';
 import 'package:intl/intl.dart';
 
 import 'package:expenses_manager/domain/entities/expenses.dart';
@@ -48,23 +49,71 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {},
             icon: const Icon(Icons.edit),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.download),
+          BlocListener<ExportExpensesBloc, ExportExpensesState>(
+            listener: (context, state) {
+              if (state is ExportExpensesFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Failed to export expenses'),
+                  ),
+                );
+              }
+            },
+            child: IconButton(
+              onPressed: () {
+                context
+                    .read<ExportExpensesBloc>()
+                    .add(const ExportExpensesDownloadPressed());
+              },
+              icon: const Icon(Icons.download),
+            ),
           ),
         ],
       ),
       body: BlocBuilder<ExpensesListBloc, ExpensesListState>(
         builder: (context, state) {
+          final totalExpenses = (state is ExpensesListLoaded)
+              ? state.expensesList.fold<double>(
+                  0,
+                  (previousValue, element) =>
+                      previousValue +
+                      (element.isExpenses == 1 ? element.amount : 0))
+              : 0.00;
+          final total = (state is ExpensesListLoaded)
+              ? state.expensesList.fold<double>(
+                  0,
+                  (previousValue, element) =>
+                      previousValue +
+                      (element.amount * (element.isExpenses == 1 ? -1 : 1)))
+              : 0.00;
           return Column(
             children: <Widget>[
               const Row(),
               const SizedBox(height: 16.0),
-              Text(
-                state is ExpensesListLoaded
-                    ? 'Total: ${state.expensesList.fold<double>(0, (previousValue, element) => previousValue + element.amount)}'
-                    : 'Total: 0.00',
-                style: Theme.of(context).textTheme.titleLarge,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    state is ExpensesListLoaded
+                        ? 'Total: ${NumberFormat().format(total)}'
+                        : 'Total: 0.00',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: total < 0
+                              ? Theme.of(context).colorScheme.error
+                              : Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                  const SizedBox(
+                    width: 8.0,
+                  ),
+                  Text(
+                    '(${NumberFormat().format(totalExpenses)})',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16.0),
               ExpensesList(
@@ -167,6 +216,7 @@ class ExpensesItem extends StatelessWidget {
             TextButton(
               child: const Text('Cancel'),
               onPressed: () {
+                // dismiss dialog
                 Navigator.of(context).pop();
               },
             ),
@@ -181,6 +231,7 @@ class ExpensesItem extends StatelessWidget {
                         id: expenses.id,
                       ),
                     );
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -210,15 +261,19 @@ class ExpensesItem extends StatelessWidget {
         ],
       ),
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 2,
             child: Text(
               NumberFormat().format(expenses.amount),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: expenses.isExpenses == 1
+                        ? Theme.of(context).colorScheme.error
+                        : Theme.of(context).colorScheme.primary,
+                  ),
             ),
           ),
           Expanded(
-            flex: 3,
             child: Text(
               switch (expenses.expensesMethod) {
                 '1' => 'Transfer',

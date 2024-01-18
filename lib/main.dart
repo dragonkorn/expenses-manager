@@ -1,6 +1,7 @@
 import 'package:expenses_manager/core/di/locator.dart';
 import 'package:expenses_manager/presentation/blocs/create_expenses/create_expenses_bloc.dart';
 import 'package:expenses_manager/presentation/blocs/expenses_list/expenses_list_bloc.dart';
+import 'package:expenses_manager/presentation/blocs/export_expenses/export_expenses_bloc.dart';
 import 'package:expenses_manager/presentation/screens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => CreateExpensesBloc()),
         BlocProvider(create: (context) => ExpensesListBloc()),
+        BlocProvider(create: (context) => ExportExpensesBloc()),
       ],
       // create: (context) => SubjectBloc(),
       child: MaterialApp(

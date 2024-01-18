@@ -1,3 +1,4 @@
+import 'package:expenses_manager/core/utils/map_to_csv.dart';
 import 'package:expenses_manager/data/db/sqlite.dart';
 import 'package:expenses_manager/data/models/expenses_model.dart';
 import 'package:injectable/injectable.dart';
@@ -18,6 +19,16 @@ class ExpensesRepository {
       return expenses.map((e) => ExpensesModel.fromJson(e)).toList();
     }
     return [];
+  }
+
+  // String? Export expenses to CSV
+  Future<String?> export() async {
+    final db = await dbCore.getDatabase();
+    final expenses = await db.query('expenses');
+    if (expenses.isNotEmpty) {
+      return mapListToCsv(expenses);
+    }
+    return '';
   }
 
   Future<void> insert(ExpensesModel expenses) async {

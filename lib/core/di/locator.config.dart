@@ -13,9 +13,11 @@ import 'package:expenses_manager/data/expenses_repository.dart' as _i5;
 import 'package:expenses_manager/domain/usecases/add_expenses_usecase.dart'
     as _i3;
 import 'package:expenses_manager/domain/usecases/delete_expenses_usecase.dart'
-    as _i7;
-import 'package:expenses_manager/domain/usecases/query_expenses_usecase.dart'
+    as _i8;
+import 'package:expenses_manager/domain/usecases/export_expenses_usecase.dart'
     as _i6;
+import 'package:expenses_manager/domain/usecases/query_expenses_usecase.dart'
+    as _i7;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -34,10 +36,12 @@ extension GetItInjectableX on _i1.GetIt {
     gh.singleton<_i4.DatabaseHelper>(_i4.DatabaseHelper());
     gh.factory<_i5.ExpensesRepository>(
         () => _i5.ExpensesRepository(dbCore: gh<_i4.DatabaseHelper>()));
-    gh.factory<_i6.QueryExpensesUseCase>(() =>
-        _i6.QueryExpensesUseCase(repository: gh<_i5.ExpensesRepository>()));
-    gh.factory<_i7.DeleteExpensesUseCase>(() =>
-        _i7.DeleteExpensesUseCase(repository: gh<_i5.ExpensesRepository>()));
+    gh.factory<_i6.ExportExpensesUseCase>(() =>
+        _i6.ExportExpensesUseCase(repository: gh<_i5.ExpensesRepository>()));
+    gh.factory<_i7.QueryExpensesUseCase>(() =>
+        _i7.QueryExpensesUseCase(repository: gh<_i5.ExpensesRepository>()));
+    gh.factory<_i8.DeleteExpensesUseCase>(() =>
+        _i8.DeleteExpensesUseCase(repository: gh<_i5.ExpensesRepository>()));
     return this;
   }
 }
